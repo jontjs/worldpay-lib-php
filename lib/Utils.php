@@ -49,14 +49,14 @@ class Utils {
         static::$threeDSShopperObject = $threeDSShopperObject;
     }
 
-    public static function getThreeDSShopperObject()
+    public static function getThreeDSShopperObject($shopperSessionId)
     {
         if (!empty(static::$threeDSShopperObject)) {
             return static::$threeDSShopperObject;
         }
 
         return array('shopperIpAddress' => Utils::getClientIp(),
-                     'shopperSessionId' => $_SESSION['worldpay_sessionid'],
+                     'shopperSessionId' => $shopperSessionId,
                      'shopperUserAgent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '',
                      'shopperAcceptHeader' => isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : '*/*'
         );

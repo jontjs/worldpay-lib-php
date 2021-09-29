@@ -18,11 +18,15 @@ $worldpay->disableSSLCheck(true);
 
 include('header.php');
 
+// you will need to retrieve these from somewhere that does not rely on cookies (e.g. not in $_SESSION):
+$orderCode = 'foo';
+$shopperSessionId = 'bar';
+
 try {
-    $response = $worldpay->authorize3DSOrder($_SESSION['orderCode'], $_POST['PaRes']);
+    $response = $worldpay->authorize3DSOrder($orderCode, $_POST['PaRes'], $shopperSessionId);
 
     if (isset($response['paymentStatus']) && ($response['paymentStatus'] == 'SUCCESS' ||  $response['paymentStatus'] == 'AUTHORIZED')) {
-        echo 'Order Code: ' . $_SESSION['orderCode'] . ' has been authorized <br/>';
+        echo 'Order Code: ' . $orderCode . ' has been authorized <br/>';
     } else {
         var_dump($response);
         echo 'There was a problem authorizing 3DS order <br/>';
