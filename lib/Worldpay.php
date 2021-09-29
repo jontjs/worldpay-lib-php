@@ -108,6 +108,7 @@ class Worldpay
     {
         $myOrder = new Order($order);
         $response = OrderService::createOrder($myOrder);
+        $response['shopperSessionId'] = $myOrder->shopperSessionId;
 
         if (isset($response["orderCode"])) {
             //success
@@ -122,13 +123,13 @@ class Worldpay
      * @param string $orderCode
      * @param string $responseCode
      * */
-    public function authorize3DSOrder($orderCode, $responseCode)
+    public function authorize3DSOrder($orderCode, $responseCode, $shopperSessionId)
     {
         if (empty($orderCode) || !is_string($orderCode)) {
             Error::throwError('ip', Error::$errors['3ds']['ordercode']);
         }
 
-        return OrderService::authorize3DSOrder($orderCode, $responseCode);
+        return OrderService::authorize3DSOrder($orderCode, $responseCode, $shopperSessionId);
     }
 
     /**
