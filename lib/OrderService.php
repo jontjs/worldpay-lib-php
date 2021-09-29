@@ -8,9 +8,9 @@ class OrderService
         return Connection::getInstance()->sendRequest('orders', json_encode($order->toArray()), true);
     }
 
-    public static function authorize3DSOrder($orderCode, $responseCode)
+    public static function authorize3DSOrder($orderCode, $responseCode, $shopperSessionId)
     {
-        $obj = array_merge(array("threeDSResponseCode" => $responseCode), Utils::getThreeDSShopperObject());
+        $obj = array_merge(array("threeDSResponseCode" => $responseCode), Utils::getThreeDSShopperObject($shopperSessionId));
         $json = json_encode($obj);
         return Connection::getInstance()->sendRequest('orders/' . $orderCode, $json, true, 'PUT');
     }
